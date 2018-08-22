@@ -1,0 +1,2 @@
+modify this file for soft reboot issue
+file path:linux-ramips_mt7688/linux-3.18.84/drivers/mtd/devices/m25p80.c
