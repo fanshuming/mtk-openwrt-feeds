@@ -1,0 +1,29 @@
+1. how to cp file to root fs
+   1.) open file : openwrt/include/image.mk
+   2.) cp file at this point:
+	define Image/mkfs/squashfs
+		#you can copy file to root fs at this point
+        	cp $(qizhi_audio_dir)/bin/audioD $(TARGET_DIR)/usr/bin/
+
+        	$(STAGING_DIR_HOST)/bin/mksquashfs4 $(TARGET_DIR) $(KDIR)/root.squashfs -nopad -noappend -root-owned -comp $(SQUASHFSCOMP) $(SQUASHFSOPT) -processors $(if $(CONFIG_PKG_BUILD_JOBS),$(CONFIG_PKG_BUILD_JOBS),1)
+	endef
+
+2. how to add auto boot config script file
+   1.) enter this directory: openwrt/package/base-files/files/etc/init.d/
+   2.) touch a file like 'example' and input the flow example script code to this 'example' file like this:
+        #!/bin/sh /etc/rc.common
+	START=99
+	STOP=15
+ 
+	start() {
+		echo start
+		#commands to launch application, such as above
+	}
+ 
+	stop() {
+		echo stop
+		#commands to kill application
+	}
+
+   3.) chmod +x /etc/init.d/example
+   4.) add this command: "/etc/init.d/example enable" in the  /etc/init.d/boot  file
